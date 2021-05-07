@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -12,6 +12,11 @@ app.register_blueprint(app_views)
 def appcontext_error(error):
     """Teardown"""
     storage.close()
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify({"error": "Not found"})
+
 
 if __name__ == "__main__":
     if environ.get("HBNB_API_HOST"):
