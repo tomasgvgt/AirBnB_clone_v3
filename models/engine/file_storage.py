@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         "Return a element if exist"
-        id_obj = cls + '.' + id
+        id_obj = cls.__name__ + '.' + id
         objects = self.all(cls, id
         for obj in objects:
             if id in obj:
