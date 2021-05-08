@@ -33,7 +33,7 @@ def get_cities_id(city_id):
                  strict_slashes=False)
 def delete_cities_id(city_id):
     """Delete state"""
-    obj = storage.get(City, City_id)
+    obj = storage.get(City, city_id)
     if obj:
         storage.delete(obj)
         storage.save()
