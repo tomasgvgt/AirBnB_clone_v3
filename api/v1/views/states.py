@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Restful api actions for State"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
@@ -7,6 +8,7 @@ from models.state import State
 
 @app_views.route('/states', strict_slashes=False)
 def get_states():
+    """Get states"""
     states = []
     for state in storage.all("State").values():
         states.append(state.to_dict())
@@ -15,6 +17,7 @@ def get_states():
 
 @app_views.route('/states/<state_id>', strict_slashes=False)
 def get_states_id(state_id):
+    """Get state by id"""
     obj = storage.get(State, state_id)
     if obj:
         return jsonify(obj.to_dict())
@@ -25,6 +28,7 @@ def get_states_id(state_id):
 @app_views.route('/states/<state_id>', methods=["DELETE"],
                  strict_slashes=False)
 def delete_states_id(state_id):
+    """Delete state"""
     obj = storage.get(State, state_id)
     if obj:
         storage.delete(obj)
@@ -36,6 +40,7 @@ def delete_states_id(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_states():
+    """Post state"""
     if request.get_json():
         if 'name' in request.get_json():
             state = State(**(request.get_json()))
@@ -50,6 +55,7 @@ def post_states():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state_id(state_id):
+    """Put state"""
     ignore_values = ['id', 'created_at', 'updated_at']
     obj = storage.get(State, state_id)
     if not obj:

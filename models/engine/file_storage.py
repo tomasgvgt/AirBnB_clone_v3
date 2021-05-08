@@ -73,13 +73,15 @@ class FileStorage:
         "Return a element if exist"
         id_obj = cls.__name__ + '.' + id
         objects = self.all(cls)
-        for obj in objects:
+        if id_obj in objects.keys():
+            return objects.get(id_obj)
+        """for obj in objects:
             if id in obj:
-                return objects[id_obj]
+                return objects[id_obj]"""
         return None
     
     def count(self, cls=None):
+        """Count number of objects in class"""
         if cls is not None:
             return (len(self.all(cls)))
         return (len(self.all()))
-

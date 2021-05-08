@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Restful api status"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -16,11 +17,13 @@ classes = {"amenities": Amenity, "cities": City, "places": Place,
 
 @app_views.route('/status')
 def app_views_status():
+    """restful api status"""
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats')
 def retrieve_stats():
+    """Restful api stats"""
     obj_stats = {}
     for k, v in classes.items():
         obj_stats[k] = storage.count(v)

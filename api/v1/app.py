@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Blueprint for app
+"""
 from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
@@ -16,6 +19,7 @@ def appcontext_error(error):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """Page not found"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
