@@ -5,7 +5,7 @@ from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 from models.city import City
-from models.amenities import amenity
+from models.amenity import Amenity
 
 
 @app_views.route('/amenities', strict_slashes=False)
