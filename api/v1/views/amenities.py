@@ -12,7 +12,7 @@ from models.amenity import Amenity
 def get_amenities():
     """Get Amenities"""
     amenities = []
-    for amenitie in storage.get(Amenity).values():
+    for amenity in storage.get(Amenity).values():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
@@ -43,7 +43,7 @@ def delete_amenities_id(amenity_id):
 @app_views.route('/amenities',
                  methods=['POST'], strict_slashes=False)
 def post_amenities():
-    """Post city"""
+    """Post amenity"""
     if request.get_json():
         if request.get_json().get('name'):
             amenity_ = Amenity(**(request.get_json()))
