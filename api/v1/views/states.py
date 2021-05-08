@@ -45,14 +45,20 @@ def post_states():
     else:
         return abort(404, 'Not a JSON')
 
-@app_views.route('/states/<state_id>', methods=[''])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state_id(state_id):
-    object = storage.get(state_id)
+    ignore_values = ['id', 'created_at', 'updated_at']
+
+    object = storage.get(State, state_id)
     if not object:
         return abort(400)
         
     if request.json:
-        
+        dictionary = request.get_json
+        for k, v in dictionary.items();
+            if k not in ingore_values:
+                setattr(object,k ,v )
+        object.save()
+        return jsonify(object.to_dict), 200
     else:
         return abort(404, 'Not a JSON')
- 
