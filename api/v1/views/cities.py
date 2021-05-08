@@ -19,7 +19,7 @@ def get_cities(state_id):
     return jsonify(cities)
 
 
-@app_views.route('/api/v1/cities/<city_id>', strict_slashes=False)
+@app_views.route('/cities/<city_id>', strict_slashes=False)
 def get_cities_id(city_id):
     """Get city by id"""
     obj = storage.get(City, city_id)
@@ -50,8 +50,9 @@ def post_cities(state_id):
         state_ = storage.get(State, state_id)
         if state_ is None:
             abort(404)
-        if 'name' in request.get_json():
+        if request.get_json().get('name'):
             city_ = City(**(request.get_json()))
+            city_.state_id = state_id
             storage.new(city_)
             storage.save()
             return make_response(jsonify(city_.to_dict()), 201)
