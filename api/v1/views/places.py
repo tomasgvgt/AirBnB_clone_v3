@@ -50,9 +50,9 @@ def post_places(city_id):
         city_ = storage.get(City, city_id)
         if city_ is None:
             abort(404)
-        if request.get_json().get('name') and
-        request.get_json().get('user_id'):
-            place_ = Place(**(request.get_json()))
+        request_ = request.get_json()
+        if request_.get('name') and request_.get('user_id'):
+            place_ = Place(**(request_))
             place_.city_id = city_.id
             storage.new(place_)
             storage.save()
