@@ -31,7 +31,7 @@ def get_places_id(place_id):
 
 @app_views.route('/places/<place_id>', methods=["DELETE"],
                  strict_slashes=False)
-def delete_places_id(city_id):
+def delete_places_id(place_id):
     """Delete place"""
     obj = storage.get(Place, place_id)
     if obj:
@@ -44,13 +44,14 @@ def delete_places_id(city_id):
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['POST'], strict_slashes=False)
-def post_places(state_id):
+def post_places(city_id):
     """Post place"""
     if request.get_json():
         city_ = storage.get(City, city_id)
         if city_ is None:
             abort(404)
-        if request.get_json().get('name') and request.get_json().get('user_id'):
+        if request.get_json().get('name') and
+        request.get_json().get('user_id'):
             place_ = Place(**(request.get_json()))
             place_.city_id = city_.id
             storage.new(place_)
