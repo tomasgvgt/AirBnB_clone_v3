@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Restful api actions for State"""
+"""Restful api actions for Users"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
@@ -42,13 +42,16 @@ def delete_user_id(user_id):
 def post_users():
     """Post user"""
     if request.get_json():
-        if 'name' in request.get_json():
+        if 'email' in request.get_json() and 'password' in request.get_json():
             user = User(**(request.get_json()))
             storage.new(user)
             storage.save()
             return make_response(jsonify(user.to_dict()), 201)
         else:
-            return abort(400, 'Missing name')
+            if 'email' not in request.get_json():
+                return abort(400, 'Missing email')
+            if 'password' not in request.get_json():
+                return abort(400, 'Missing password')
     else:
         return abort(404, 'Not a JSON')
 
@@ -56,10 +59,10 @@ def post_users():
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user_id(user_id):
     """Put user"""
-    ignore_values = ['id', 'created_at', 'updated_at']
+    ignore_values = ['id', 'email', 'created_at', 'updated_at']
     obj = storage.get(User, user_id)
     if not obj:
-        return abort(400)
+        return abort(404)
     if request.get_json():
         dictionary = request.get_json()
         for k, v in dictionary.items():
