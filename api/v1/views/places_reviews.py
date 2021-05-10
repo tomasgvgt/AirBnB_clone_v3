@@ -54,12 +54,9 @@ def post_review(place_id):
 
         # check user
         user_id_check = request_.get('user_id')
-        if user_id_check:
-            user_ = storage.get(User, user_id_check)
-        else:
-            abort(404)
-
         user_ = storage.get(User, user_id_check)
+        if user_ is None:
+            abort(404)
 
         if request_.get('user_id') and request_.get('text'):
             review_ = Review(**(request_))
