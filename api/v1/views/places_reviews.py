@@ -50,14 +50,13 @@ def post_review(place_id):
         place_ = storage.get(Place, place_id)
         if place_ is None:
             abort(404)
-        request_ = request.get_json().
+        request_ = request.get_json()
 
         # check user
         user_id_check = request_.get('user_id')
         user_ = storage.get(User, user_id_check)
         if user_ is None:
             abort(404)
-        request_ = request.get_json().
 
         if request_.get('user_id') and request_.get('text'):
             review_ = Review(**(request_))
