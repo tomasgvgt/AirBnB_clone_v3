@@ -8,6 +8,7 @@ from models.city import City
 from models.user import User
 from models.place import Place
 
+
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False)
 def get_reviews(place_id):
     """Get reviews"""
