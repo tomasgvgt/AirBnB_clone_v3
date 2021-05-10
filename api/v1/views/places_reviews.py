@@ -60,7 +60,7 @@ def post_review(place_id):
             abort(404)
 
         user_ = storage.get(User, user_id_check)
-        
+
         if request_.get('user_id') and request_.get('text'):
             review_ = Review(**(request_))
             review_.state_id = place_.id
