@@ -54,10 +54,13 @@ def post_review(place_id):
 
         # check user
         user_id_check = request_.get('user_id')
-        user_ = storage.get(User, user_id_check)
-        if user_ is None:
+        if user_id_check:
+            user_ = storage.get(User, user_id_check)
+        else:
             abort(404)
 
+        user_ = storage.get(User, user_id_check)
+        
         if request_.get('user_id') and request_.get('text'):
             review_ = Review(**(request_))
             review_.state_id = place_.id
@@ -65,9 +68,9 @@ def post_review(place_id):
             storage.save()
             return make_response(jsonify(review_.to_dict()), 201)
         else:
-            if request_.get('user_id'):
-                return abort(400, 'Missing name')
-            if request_.get('text'):
+            if request_.get('user_id') is None:
+                return abort(400, 'Missing user_id')
+            if request_.get('text') is None:
                 return abort(400, 'Missing text')
 
     else:
